@@ -3,28 +3,27 @@ import { Routes, Route, NavLink } from "react-router-dom";
 
 import AddTask from "./pages/AddTask";
 import TaskList from "./pages/TaskList";
+import { GlobalProvider } from "./contexts/GlobalContext";
 
-console.log('✅ AddTask:', AddTask);
-console.log('✅ TaskList:', TaskList);
 
 function App() {
 
 
   return (
 
+    <GlobalProvider>
+      <div>
+        <nav className="navbar">
+          <NavLink to='/'> Lista Task</NavLink>
+          <NavLink to='/add'> Aggiungi Task</NavLink>
 
-    <div>
-      <nav className="navbar">
-        <NavLink to='/'> Lista Task</NavLink>
-        <NavLink to='/add'> Aggiungi Task</NavLink>
-
-      </nav>
-      <Routes>
-        <Route path='/' element={<TaskList />} />
-        <Route path='/add' element={<AddTask />} />
-      </Routes>
-    </div>
-
+        </nav>
+        <Routes>
+          <Route path='/' element={<TaskList />} />
+          <Route path='/add' element={<AddTask />} />
+        </Routes>
+      </div>
+    </GlobalProvider>
 
   )
 }
