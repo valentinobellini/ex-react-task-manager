@@ -9,7 +9,7 @@ export default function TaskList() {
 
 
         < div >
-            <h2>Lista dei Task</h2>
+            <h1>Lista dei Task</h1>
 
             {
                 tasks.length === 0 ? (
