@@ -14,10 +14,10 @@ function App() {
     <GlobalProvider>
       <BrowserRouter>
 
-        <div>
+        <div className="container">
           <nav className="navbar">
-            <NavLink to='/'> Lista Task</NavLink>
-            <NavLink to='/add'> Aggiungi Task</NavLink>
+            <NavLink className={'link'} to='/'> Lista Task</NavLink>
+            <NavLink className={'link'} to='/add'> Aggiungi Task</NavLink>
 
           </nav>
           <Routes>
