@@ -22,8 +22,9 @@ body {
 .container {
     width: 60vw;
     background-color: #AEC5EB;
-    margin-top: 100px;
-    padding: 50px 0px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 20px 0px;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -51,6 +52,11 @@ nav {
     color: black;
 }
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
 .link:nth-child(1) {
     background-color: #59CD90;
 }
@@ -62,7 +68,7 @@ nav {
 
 /* TABLE  */
 .table_wrapper {
-    padding: 50px;
+    padding: 20px 50px 0px 50px;
 }
 
 table {
@@ -221,4 +227,146 @@ button[type="submit"] {
 button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+
+
+
+/* ---------------*/
+
+/* TASK DETAIL */
+
+.detail_wrapper {
+    padding: 40px 30px;
+    border-radius: 12px;
+    width: 90%;
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-family: 'Montserrat', sans-serif;
+    color: #222;
+}
+
+.detail_wrapper h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.detail_wrapper p,
+.detail_wrapper span {
+    font-size: 18px;
+    line-height: 1.4;
+}
+
+.status_badge.todo {
+    background-color: rgb(252, 192, 192);
+    width: 100px;
+    text-align: center;
+}
+
+.status_badge.doing {
+    background-color: rgb(242, 247, 179);
+    width: 100px;
+    text-align: center;
+}
+
+.status_badge.done {
+    background-color: rgb(177, 233, 177);
+    width: 100px;
+    text-align: center;
+}
+
+
+.detail_wrapper button {
+    align-self: center;
+    padding: 12px 24px;
+    background-color: #ef5e5e;
+    border: 1px solid #aaa;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    color: white;
+    transition: background-color 0.2s ease;
+}
+
+.detail_wrapper button:hover {
+    background-color: #d14848;
+}
+
+
+/* ------------------ */
+
+/* MODAL */
+
+.modal_overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(18, 78, 120, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background-color: #e9f1ff;
+    padding: 30px 40px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    max-width: 600px;
+    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+}
+
+.modal h2 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #124E78;
+}
+
+.modal p {
+    font-size: 16px;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.modal_actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.modal_actions button {
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.modal_actions .btn_cancel {
+    background-color: #ddd;
+    color: #222;
+}
+
+.modal_actions .btn_cancel:hover {
+    background-color: #ccc;
+}
+
+.modal_actions .btn_confirm {
+    background-color: #ef5e5e;
+    color: white;
+}
+
+.modal_actions .btn_confirm:hover {
+    background-color: #d14848;
 }

@@ -4,7 +4,9 @@ const { VITE_API_URL } = import.meta.env
 export default function useTasks() {
     const [tasks, setTasks] = useState([]);
 
-    //funzione per il fetch delle tasks
+
+
+    //FUNZIONE PER IL FETCH DELLE TASKS
     const fetchTasks = async () => {
         try {
             const res = await fetch(`${VITE_API_URL}/tasks`)
@@ -20,6 +22,7 @@ export default function useTasks() {
 
 
 
+    // FUNZIONE AGGIUNGI TASK
     const addTask = async (newTask) => {
 
         const res = await fetch(`${VITE_API_URL}/tasks`, {
@@ -43,7 +46,27 @@ export default function useTasks() {
     };
 
 
-    const removeTask = async () => { };
+
+
+    // FUNZIONE DELETE TASK
+    const removeTask = async (taskId) => {
+
+        const res = await fetch(`${VITE_API_URL}/tasks/${taskId}`, {
+            method: 'DELETE'
+        });
+
+        const { success, message } = await res.json();
+
+        if (!success) throw new Error(message)
+
+        setTasks(prev => prev.filter(task => task.id !== taskId))
+
+    };
+
+
+
+
+    // FUNZIONE AGGIONRA TASK
     const updateTask = async () => { };
 
 

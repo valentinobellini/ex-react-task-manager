@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 
 function TaskRow({ task, rowClassName }) {
@@ -7,7 +8,9 @@ function TaskRow({ task, rowClassName }) {
 
     return (
         <tr className={rowClassName}>
-            <td>{task.title}</td>
+            <td>
+                <Link to={`/task/${task.id}`}>{task.title}</Link>
+            </td>
             <td>
                 <span className={`status_badge ${statusClassName}`}>{task.status}</span>
             </td>
