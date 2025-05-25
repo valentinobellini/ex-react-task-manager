@@ -1,10 +1,14 @@
 import { useState, useRef, useMemo } from "react"
+import { useGlobalContext } from "../contexts/GlobalContext";
+
 
 const symbols = "!@#$%^&*()-_=+[]{}|;:'\\\",.<>?/`~";
 
 export default function AddTask() {
 
     const [title, setTitle] = useState('');
+    const { addTask } = useGlobalContext();
+
     const titleError = useMemo(() => {
         if (!title.trim())
             return 'Il nome della task non può essere vuoto.'
@@ -17,17 +21,26 @@ export default function AddTask() {
     const statusRef = useRef();
 
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
+
+        if (titleError) return;
 
         const newTask = {
             title: title.trim(),
-            description: descriptionRef.current.value,
+            description: descriptionRef.current.value.trim(),
             status: statusRef.current.value
+        };
+
+        try {
+            await addTask(newTask);
+            alert("Task creata con successo!");
+            setTitle(""); // reset campo controllato
+            descriptionRef.current.value = ""; // reset ref
+            statusRef.current.value = "To do"; // reset ref
+        } catch (err) {
+            alert(err.message || "Errore nella creazione del task.");
         }
-
-        console.log(newTask);
-
     }
 
     return (
@@ -37,7 +50,8 @@ export default function AddTask() {
         <div className="form_wrapper">
 
             <form onSubmit={handleSubmit}>
-                <section>
+
+                <section>Nome Task:
                     <input type="text"
                         placeholder="Titolo"
                         value={title}
@@ -46,17 +60,17 @@ export default function AddTask() {
                 </section>
                 {titleError && <p style={{ color: 'red' }}>{titleError}</p>}
 
-                <section>
+                <section>Descrizione task:
                     <textarea
                         placeholder="Descrizione"
                         ref={descriptionRef}
                     ></textarea>
                 </section>
 
-                <section>
-                    <select ref={statusRef} defaultValue={'To Do'}>
+                <section> Stato:
+                    <select ref={statusRef} defaultValue={'To do'}>
                         <option value="Seleziona uno stato"></option>
-                        <option value="To Do">To Do</option>
+                        <option value="To do">To do</option>
                         <option value="Doing">Doing</option>
                         <option value="Done">Done</option>
                     </select>

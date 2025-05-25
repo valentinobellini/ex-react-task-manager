@@ -141,3 +141,84 @@ td:nth-child(3) {
 .status_badge.done {
     background-color: rgb(177, 233, 177);
 }
+
+
+
+
+
+
+/* -------------------------------- */
+
+
+
+
+/* FORM */
+.form_wrapper {
+    background-color: #b0c9f0;
+    padding: 40px 30px;
+    border-radius: 12px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+form section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-weight: 500;
+    color: #000;
+}
+
+
+input[type="text"],
+textarea,
+select {
+    padding: 10px;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #fdfdfd;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Focus */
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: #888;
+    box-shadow: 0 0 0 2px rgba(136, 136, 136, 0.2);
+}
+
+/* Messaggio errore */
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+/* Bottone */
+button[type="submit"] {
+    align-self: center;
+    padding: 12px 24px;
+    background-color: #f5c08e;
+    border: 1px solid #aaa;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
