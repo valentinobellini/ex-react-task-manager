@@ -69,7 +69,6 @@ export default function AddTask() {
 
                 <section> Stato:
                     <select ref={statusRef} defaultValue={'To do'}>
-                        <option value="Seleziona uno stato"></option>
                         <option value="To do">To do</option>
                         <option value="Doing">Doing</option>
                         <option value="Done">Done</option>

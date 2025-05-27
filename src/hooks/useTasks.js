@@ -34,8 +34,11 @@ export default function useTasks() {
         });
 
         const { success, message, task } = await res.json();
-        console.log(res);
-        console.log(task);
+        console.log("📤 Risposta fetch:", res);
+        console.log("✅ success:", success);
+        console.log("📝 message:", message);
+        console.log("📦 task:", task);
+
 
 
 
@@ -67,7 +70,22 @@ export default function useTasks() {
 
 
     // FUNZIONE AGGIONRA TASK
-    const updateTask = async () => { };
+    const updateTask = async (updatedTask) => {
+        const res = await fetch(`${VITE_API_URL}/tasks/${updatedTask.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedTask)
+        });
+
+        const { success, message, task } = await res.json();
+
+        if (!success) throw new Error(message)
+
+        setTasks(prev => prev.map(t => t.id === task.id ? task : t));
+
+    };
 
 
     // use effect per invocare il fetch solo al caricamento del componente
