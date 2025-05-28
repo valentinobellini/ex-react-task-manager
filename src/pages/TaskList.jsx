@@ -1,6 +1,17 @@
 import { useGlobalContext } from "../contexts/GlobalContext"
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import TaskRow from "../components/TaskRow";
+
+function debounce(callback, delay) {
+    let timer;
+    return (value) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            callback(value);
+        }, delay)
+    };
+}
+
 
 export default function TaskList() {
 
@@ -8,7 +19,6 @@ export default function TaskList() {
 
     const [sortBy, setSortBy] = useState('createdAt');
     const [sortOrder, setSortOrder] = useState(1)
-
 
     function handleSort(column) {
         if (sortBy === column) {
@@ -20,8 +30,19 @@ export default function TaskList() {
     }
 
 
-    const sortedTasks = useMemo(() => {
-        const sorted = [...tasks];
+    const [searchQuery, setSearchQuery] = useState('')
+
+    const handleSearch = useCallback(
+        debounce(setSearchQuery, 500),
+        []
+    )
+
+    const filteredAndSortedTasks = useMemo(() => {
+        const filtered = tasks.filter(task =>
+            task.title.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+
+        const sorted = [...filtered];
 
         sorted.sort((a, b) => {
             if (sortBy === 'title') {
@@ -35,7 +56,7 @@ export default function TaskList() {
         })
 
         return sorted;
-    }, [tasks, sortBy, sortOrder])
+    }, [tasks, sortBy, sortOrder, searchQuery])
 
 
     return (
@@ -48,44 +69,53 @@ export default function TaskList() {
                 tasks.length === 0 ? (
                     <p>nessun task trovato</p>
                 ) : (
-                    <table>
-                        <thead>
-                            <tr>
+                    <>
+                        <input type="text"
+                            className="search_bar"
+                            placeholder="Cerca task per nome..."
+                            onChange={e => handleSearch(e.target.value)}
+                        />
 
-                                <th onClick={() => handleSort('title')} className="sortable">Nome
-                                    {sortBy === "title" && (
-                                        <span className="arrow">{sortOrder === 1 ? "▲" : "▼"}</span>
-                                    )}
-                                </th>
+                        <table>
+                            <thead>
+                                <tr>
 
-                                <th onClick={() => handleSort('status')} className="sortable">Stato
-                                    {sortBy === "status" && (
-                                        <span className="arrow">{sortOrder === 1 ? "▲" : "▼"}</span>
-                                    )}
-                                </th>
+                                    <th onClick={() => handleSort('title')} className="sortable">Nome
+                                        {sortBy === "title" && (
+                                            <span className="arrow">{sortOrder === 1 ? "▲" : "▼"}</span>
+                                        )}
+                                    </th>
 
-                                <th onClick={() => handleSort('createdAt')} className="sortable">Data di Creazione
-                                    {sortBy === "createdAt" && (
-                                        <span className="arrow">{sortOrder === 1 ? "▲" : "▼"}</span>
-                                    )}
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {sortedTasks.map((task, index) => {
-                                const rowClassName = index % 2 === 0 ? 'row' : 'row_alternate';
-                                return (
-                                    <TaskRow
-                                        key={task.id}
-                                        task={task}
-                                        rowClassName={rowClassName}
-                                    />
-                                );
-                            })}
-                        </tbody>
-                    </table>
+                                    <th onClick={() => handleSort('status')} className="sortable">Stato
+                                        {sortBy === "status" && (
+                                            <span className="arrow">{sortOrder === 1 ? "▲" : "▼"}</span>
+                                        )}
+                                    </th>
+
+                                    <th onClick={() => handleSort('createdAt')} className="sortable">Data di Creazione
+                                        {sortBy === "createdAt" && (
+                                            <span className="arrow">{sortOrder === 1 ? "▲" : "▼"}</span>
+                                        )}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {filteredAndSortedTasks.map((task, index) => {
+                                    const rowClassName = index % 2 === 0 ? 'row' : 'row_alternate';
+                                    return (
+                                        <TaskRow
+                                            key={task.id}
+                                            task={task}
+                                            rowClassName={rowClassName}
+                                        />
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </>
                 )
             }
         </div >
+
     )
 }
